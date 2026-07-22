@@ -18,4 +18,17 @@ async function createVehicle(req, res, next) {
   }
 }
 
-module.exports = { getVehicles, createVehicle };
+async function updateVehicle(req, res, next) {
+  try {
+    const vehicle = await Vehicle.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    if (!vehicle) return res.status(404).json({ message: 'Vehicle not found' });
+    res.status(200).json(vehicle);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getVehicles, createVehicle, updateVehicle };
