@@ -5,7 +5,8 @@ const {
   createVehicle,
   updateVehicle,
   deleteVehicle,
-  purchaseVehicle
+  purchaseVehicle,
+  restockVehicle
 } = require('../controllers/vehicleController');
 const { protect, adminOnly } = require('../middleware/auth');
 
@@ -19,5 +20,6 @@ router.put('/:id', protect, updateVehicle);
 router.delete('/:id', protect, adminOnly, deleteVehicle);
 
 router.post('/:id/purchase', protect, purchaseVehicle);
+router.post('/:id/restock', protect, adminOnly, restockVehicle);
 
 module.exports = router;

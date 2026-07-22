@@ -84,11 +84,28 @@ async function purchaseVehicle(req, res, next) {
   }
 }
 
+async function restockVehicle(req, res, next) {
+  try {
+    const { amount } = req.body;
+    const increment = Number.isFinite(Number(amount)) && Number(amount) > 0 ? Number(amount) : 1;
+
+    const vehicle = await Vehicle.findById(req.params.id);
+    if (!vehicle) return notFound(res);
+
+    vehicle.quantity += increment;
+    await vehicle.save();
+    res.status(200).json(vehicle);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   getVehicles,
   searchVehicles,
   createVehicle,
   updateVehicle,
   deleteVehicle,
-  purchaseVehicle
+  purchaseVehicle,
+  restockVehicle
 };
