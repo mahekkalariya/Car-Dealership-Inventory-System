@@ -57,6 +57,40 @@ describe('Vehicle API', () => {
     expect(res.body.length).toBe(1);
   });
 
+  it('searches vehicles by make', async () => {
+    const token = await getToken();
+    await request(app).post('/api/vehicles').set('Authorization', `Bearer ${token}`).send(sampleVehicle);
+    await request(app)
+      .post('/api/vehicles')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...sampleVehicle, make: 'Honda', model: 'Civic' });
+
+    const res = await request(app)
+      .get('/api/vehicles/search?make=Toyota')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.length).toBe(1);
+    expect(res.body[0].make).toBe('Toyota');
+  });
+
+  it('searches vehicles by price range', async () => {
+    const token = await getToken();
+    await request(app).post('/api/vehicles').set('Authorization', `Bearer ${token}`).send(sampleVehicle); // 25000
+    await request(app)
+      .post('/api/vehicles')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...sampleVehicle, make: 'Ford', model: 'F-150', price: 41000 });
+
+    const res = await request(app)
+      .get('/api/vehicles/search?maxPrice=30000')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.length).toBe(1);
+    expect(res.body[0].make).toBe('Toyota');
+  });
+
   it('updates a vehicle', async () => {
     const token = await getToken();
     const create = await request(app).post('/api/vehicles').set('Authorization', `Bearer ${token}`).send(sampleVehicle);
