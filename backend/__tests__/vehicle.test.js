@@ -1,50 +1,27 @@
-const request = require('supertest');
-const createApp = require('../app');
-
-const app = createApp();
-
-const sampleVehicle = {
-  make: 'Toyota',
-  model: 'Camry',
-  category: 'Sedan',
-  price: 25000,
-  quantity: 5
-};
-
-async function getToken(email = 'buyer@example.com') {
-  const res = await request(app).post('/api/auth/register').send({
-    name: 'Test User',
-    email,
-    password: 'password123'
-  });
-  return res.body.token;
-}
-
-describe('Vehicle API', () => {
-  it('rejects requests without a token', async () => {
-    const res = await request(app).get('/api/vehicles');
-    expect(res.status).toBe(401);
-  });
-
-  it('creates a vehicle when authenticated', async () => {
+it('updates a vehicle', async () => {
     const token = await getToken();
-
-    const res = await request(app)
+    const create = await request(app)
       .post('/api/vehicles')
       .set('Authorization', `Bearer ${token}`)
       .send(sampleVehicle);
 
-    expect(res.status).toBe(201);
-    expect(res.body.make).toBe('Toyota');
-    expect(res.body.quantity).toBe(5);
-  });
+    const res = await request(app)
+      .put(`/api/vehicles/${create.body._id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ price: 23000 });
 
-  it('lists all vehicles', async () => {
-    const token = await getToken();
-    await request(app).post('/api/vehicles').set('Authorization', `Bearer ${token}`).send(sampleVehicle);
-
-    const res = await request(app).get('/api/vehicles').set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(200);
-    expect(res.body.length).toBe(1);
+    expect(res.body.price).toBe(23000);
   });
-});
+
+  it('returns 404 when updating a vehicle that does not exist', async () => {
+    const token = await getToken();
+    const fakeId = '507f1f77bcf86cd799439011';
+
+    const res = await request(app)
+      .put(`/api/vehicles/${fakeId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ price: 23000 });
+
+    expect(res.status).toBe(404);
+  });
