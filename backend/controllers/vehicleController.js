@@ -13,6 +13,28 @@ async function getVehicles(req, res, next) {
   }
 }
 
+async function searchVehicles(req, res, next) {
+  try {
+    const { make, model, category, minPrice, maxPrice } = req.query;
+    const filter = {};
+
+    if (make) filter.make = new RegExp(make, 'i');
+    if (model) filter.model = new RegExp(model, 'i');
+    if (category) filter.category = new RegExp(category, 'i');
+
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = Number(minPrice);
+      if (maxPrice) filter.price.$lte = Number(maxPrice);
+    }
+
+    const vehicles = await Vehicle.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(vehicles);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function createVehicle(req, res, next) {
   try {
     const vehicle = await Vehicle.create(req.body);
@@ -45,4 +67,4 @@ async function deleteVehicle(req, res, next) {
   }
 }
 
-module.exports = { getVehicles, createVehicle, updateVehicle, deleteVehicle };
+module.exports = { getVehicles, searchVehicles, createVehicle, updateVehicle, deleteVehicle };
