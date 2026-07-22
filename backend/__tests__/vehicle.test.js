@@ -41,6 +41,35 @@ describe('Vehicle API', () => {
     expect(res.status).toBe(401);
   });
 
+  it('decreases quantity on purchase', async () => {
+    const token = await getToken();
+    const create = await request(app)
+      .post('/api/vehicles')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...sampleVehicle, quantity: 1 });
+
+    const res = await request(app)
+      .post(`/api/vehicles/${create.body._id}/purchase`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.quantity).toBe(0);
+  });
+
+  it('rejects purchase when out of stock', async () => {
+    const token = await getToken();
+    const create = await request(app)
+      .post('/api/vehicles')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...sampleVehicle, quantity: 0 });
+
+    const res = await request(app)
+      .post(`/api/vehicles/${create.body._id}/purchase`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(400);
+  });
+
   it('creates a vehicle when authenticated', async () => {
     const token = await getToken();
     const res = await request(app).post('/api/vehicles').set('Authorization', `Bearer ${token}`).send(sampleVehicle);
