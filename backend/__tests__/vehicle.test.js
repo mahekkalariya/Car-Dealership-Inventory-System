@@ -41,6 +41,38 @@ describe('Vehicle API', () => {
     expect(res.status).toBe(401);
   });
 
+  it('allows admins to restock a vehicle', async () => {
+    const token = await getToken();
+    const create = await request(app)
+      .post('/api/vehicles')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...sampleVehicle, quantity: 0 });
+
+    const adminToken = await getAdminToken();
+    const res = await request(app)
+      .post(`/api/vehicles/${create.body._id}/restock`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ amount: 3 });
+
+    expect(res.status).toBe(200);
+    expect(res.body.quantity).toBe(3);
+  });
+
+  it('prevents non-admins from restocking', async () => {
+    const token = await getToken();
+    const create = await request(app)
+      .post('/api/vehicles')
+      .set('Authorization', `Bearer ${token}`)
+      .send(sampleVehicle);
+
+    const res = await request(app)
+      .post(`/api/vehicles/${create.body._id}/restock`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ amount: 3 });
+
+    expect(res.status).toBe(403);
+  });
+
   it('decreases quantity on purchase', async () => {
     const token = await getToken();
     const create = await request(app)
