@@ -4,18 +4,20 @@ const {
   searchVehicles,
   createVehicle,
   updateVehicle,
-  deleteVehicle
+  deleteVehicle,
+  purchaseVehicle
 } = require('../controllers/vehicleController');
 const { protect, adminOnly } = require('../middleware/auth');
 
 const router = express.Router();
 
-// IMPORTANT: /search must stay above any /:id route below it.
 router.get('/search', protect, searchVehicles);
 
 router.get('/', protect, getVehicles);
 router.post('/', protect, createVehicle);
 router.put('/:id', protect, updateVehicle);
 router.delete('/:id', protect, adminOnly, deleteVehicle);
+
+router.post('/:id/purchase', protect, purchaseVehicle);
 
 module.exports = router;

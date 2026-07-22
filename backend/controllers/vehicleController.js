@@ -67,4 +67,28 @@ async function deleteVehicle(req, res, next) {
   }
 }
 
-module.exports = { getVehicles, searchVehicles, createVehicle, updateVehicle, deleteVehicle };
+async function purchaseVehicle(req, res, next) {
+  try {
+    const vehicle = await Vehicle.findById(req.params.id);
+    if (!vehicle) return notFound(res);
+
+    if (vehicle.quantity <= 0) {
+      return res.status(400).json({ message: 'Vehicle is out of stock' });
+    }
+
+    vehicle.quantity -= 1;
+    await vehicle.save();
+    res.status(200).json(vehicle);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = {
+  getVehicles,
+  searchVehicles,
+  createVehicle,
+  updateVehicle,
+  deleteVehicle,
+  purchaseVehicle
+};
