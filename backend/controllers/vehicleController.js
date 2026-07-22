@@ -9,4 +9,13 @@ async function getVehicles(req, res, next) {
   }
 }
 
-module.exports = { getVehicles };
+async function createVehicle(req, res, next) {
+  try {
+    const vehicle = await Vehicle.create(req.body);
+    res.status(201).json(vehicle);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getVehicles, createVehicle };
