@@ -7,6 +7,14 @@ function signToken(user) {
   });
 }
 
+// Extracted: both register and login return the same { token, user } shape.
+function buildAuthResponse(user) {
+  return {
+    token: signToken(user),
+    user: { id: user._id, name: user.name, email: user.email, role: user.role }
+  };
+}
+
 async function register(req, res, next) {
   try {
     const { name, email, password } = req.body;
@@ -21,11 +29,7 @@ async function register(req, res, next) {
     }
 
     const user = await User.create({ name, email, password });
-
-    return res.status(201).json({
-      token: signToken(user),
-      user: { id: user._id, name: user.name, email: user.email, role: user.role }
-    });
+    return res.status(201).json(buildAuthResponse(user));
   } catch (err) {
     next(err);
   }
@@ -44,10 +48,7 @@ async function login(req, res, next) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    return res.status(200).json({
-      token: signToken(user),
-      user: { id: user._id, name: user.name, email: user.email, role: user.role }
-    });
+    return res.status(200).json(buildAuthResponse(user));
   } catch (err) {
     next(err);
   }
