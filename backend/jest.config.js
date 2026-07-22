@@ -1,7 +1,6 @@
-const path = require('path');
-
 module.exports = {
   testEnvironment: 'node',
-  setupFilesAfterEnv: [path.join(__dirname, '__tests__', 'setup.js')],
+  setupFilesAfterEnv: ['./__tests__/setup.js'],
+  testPathIgnorePatterns: ['/node_modules/', '/__tests__/setup.js'],
   testTimeout: 20000
 };
