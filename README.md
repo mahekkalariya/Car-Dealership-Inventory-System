@@ -213,6 +213,16 @@ Tests run against an isolated in-memory MongoDB instance (`mongodb-memory-server
 | POST   | `/api/vehicles/:id/restock`  | admin | Restock (quantity +N)                        |
 
 ---
+# Live Demo
+
+//vercel link direct web
+
+https://car-dealership-inventory-system-seven.vercel.app/
+
+//backend
+
+https://car-dealership-inventory-system-b1uo.onrender.com/api/health
+---
 
 
 # Screenshots
