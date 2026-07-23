@@ -10,6 +10,29 @@ describe('POST /api/auth/login', () => {
     await request(app).post('/api/auth/register').send(validUser);
   });
 
+  it('registers as admin when role is explicitly specified', async () => {
+    const res = await request(app).post('/api/auth/register').send({
+      name: 'Admin User',
+      email: 'admin2@example.com',
+      password: 'password123',
+      role: 'admin'
+    });
+
+    expect(res.status).toBe(201);
+    expect(res.body.user.role).toBe('admin');
+  });
+
+  it('defaults to user role when none is specified', async () => {
+    const res = await request(app).post('/api/auth/register').send({
+      name: 'Plain User',
+      email: 'plain@example.com',
+      password: 'password123'
+    });
+
+    expect(res.status).toBe(201);
+    expect(res.body.user.role).toBe('user');
+  });
+
   it('logs in with correct credentials', async () => {
     const res = await request(app)
       .post('/api/auth/login')
