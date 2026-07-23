@@ -6,7 +6,8 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 
 function PrivateRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  if (loading) return null;
   return user ? children : <Navigate to="/login" replace />;
 }
 
