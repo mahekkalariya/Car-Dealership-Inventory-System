@@ -81,14 +81,22 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-semibold">Inventory</h1>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-extrabold text-gray-900">Inventory</h1>
+          <p className="text-sm text-gray-500">
+            {vehicles.length} vehicle{vehicles.length !== 1 ? 's' : ''} available
+          </p>
+        </div>
         {isAdmin && (
           <button
-            onClick={() => { setEditingVehicle(null); setShowForm((v) => !v); }}
-            className="bg-blue-600 text-white text-sm rounded-md px-4 py-2 hover:bg-blue-700"
+            onClick={() => {
+              setEditingVehicle(null);
+              setShowForm((v) => !v);
+            }}
+            className="bg-brand-600 text-white text-sm font-semibold rounded-lg px-4 py-2.5 hover:bg-brand-700 active:scale-[0.98] transition-all"
           >
-            {showForm ? 'Close form' : 'Add vehicle'}
+            {showForm ? 'Close form' : '+ Add vehicle'}
           </button>
         )}
       </div>
@@ -99,16 +107,22 @@ export default function Dashboard() {
         <VehicleForm
           editingVehicle={editingVehicle}
           onSubmit={handleFormSubmit}
-          onCancel={() => { setEditingVehicle(null); setShowForm(false); }}
+          onCancel={() => {
+            setEditingVehicle(null);
+            setShowForm(false);
+          }}
         />
       )}
 
       {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
 
       {loading ? (
-        <p className="text-gray-500 text-sm">Loading vehicles…</p>
+        <div className="text-center py-16 text-gray-400">Loading vehicles…</div>
       ) : vehicles.length === 0 ? (
-        <p className="text-gray-500 text-sm">No vehicles yet — add one to get started.</p>
+        <div className="text-center py-16">
+          <p className="text-gray-400 text-4xl mb-2">🚗</p>
+          <p className="text-gray-500 text-sm">No vehicles yet — add one to get started.</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {vehicles.map((vehicle) => (
@@ -119,7 +133,10 @@ export default function Dashboard() {
               onPurchase={handlePurchase}
               onRestock={handleRestock}
               onDelete={handleDelete}
-              onEdit={(v) => { setEditingVehicle(v); setShowForm(true); }}
+              onEdit={(v) => {
+                setEditingVehicle(v);
+                setShowForm(true);
+              }}
             />
           ))}
         </div>

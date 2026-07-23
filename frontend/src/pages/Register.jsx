@@ -27,58 +27,70 @@ export default function Register() {
     }
   }
 
+  const inputClass =
+    'w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow';
+
   return (
-    <div className="max-w-sm mx-auto mt-12 bg-white p-6 rounded-lg border border-gray-200">
-      <h1 className="text-xl font-semibold mb-4">Create an account</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Name</label>
-          <input required value={form.name} onChange={(e) => update('name', e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2" />
+    <div className="min-h-[80vh] flex items-center justify-center">
+      <div className="max-w-sm w-full bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+        <div className="text-center mb-6">
+          <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-600 text-white text-xl mb-3">
+            🚗
+          </span>
+          <h1 className="text-xl font-bold text-gray-900">Create an account</h1>
+          <p className="text-sm text-gray-500 mt-1">Join the dealership inventory system</p>
         </div>
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Email</label>
-          <input type="email" required value={form.email} onChange={(e) => update('email', e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2" />
-        </div>
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Password</label>
-          <input type="password" required minLength={6} value={form.password} onChange={(e) => update('password', e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2" />
-        </div>
-        <div>
-          <label className="block text-sm text-gray-600 mb-2">Account type</label>
-          <div className="flex gap-4 text-sm">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="role"
-                checked={form.role === 'user'}
-                onChange={() => update('role', 'user')}
-              />
-              Regular user
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="role"
-                checked={form.role === 'admin'}
-                onChange={() => update('role', 'admin')}
-              />
-              Admin
-            </label>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <input required value={form.name} onChange={(e) => update('name', e.target.value)} className={inputClass} />
           </div>
-        </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button type="submit" disabled={submitting}
-          className="w-full bg-blue-600 text-white rounded-md py-2 hover:bg-blue-700 disabled:opacity-50">
-          {submitting ? 'Creating account…' : 'Create account'}
-        </button>
-      </form>
-      <p className="text-sm text-gray-600 mt-4">
-        Already have an account?{' '}
-        <Link to="/login" className="text-blue-600 hover:underline">Log in</Link>
-      </p>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" required value={form.email} onChange={(e) => update('email', e.target.value)} className={inputClass} />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input
+              type="password"
+              required
+              minLength={6}
+              value={form.password}
+              onChange={(e) => update('password', e.target.value)}
+              className={inputClass}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Account type</label>
+            <div className="flex gap-4 text-sm">
+              <label className="flex items-center gap-2">
+                <input type="radio" name="role" checked={form.role === 'user'} onChange={() => update('role', 'user')} />
+                Regular user
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" name="role" checked={form.role === 'admin'} onChange={() => update('role', 'admin')} />
+                Admin
+              </label>
+            </div>
+          </div>
+          {error && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-brand-600 text-white font-semibold rounded-lg py-2.5 hover:bg-brand-700 active:scale-[0.98] transition-all disabled:opacity-50"
+          >
+            {submitting ? 'Creating account…' : 'Create account'}
+          </button>
+        </form>
+
+        <p className="text-sm text-gray-600 mt-5 text-center">
+          Already have an account?{' '}
+          <Link to="/login" className="text-brand-600 font-medium hover:underline">
+            Log in
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
