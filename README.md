@@ -214,12 +214,6 @@ Tests run against an isolated in-memory MongoDB instance (`mongodb-memory-server
 
 ---
 
-# Live Demo
-
-*Add your deployed frontend/backend links here once deployed.*
-
----
-
 
 # Screenshots
 
