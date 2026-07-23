@@ -1,18 +1,37 @@
-
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Oswald', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  --color-brand-50: #eef4ff;
-  --color-brand-100: #d9e6ff;
-  --color-brand-200: #b3ccff;
-  --color-brand-500: #3d5afe;
-  --color-brand-600: #2f46d1;
-  --color-brand-700: #26379e;
+  --color-ink: #14181f;
+  --color-paper: #eef0f3;
+  --color-panel: #ffffff;
+  --color-line: #d7dbe1;
+
+  --color-accent: #ff5a1f;
+  --color-accent-deep: #c43e10;
+
+  --color-stock-good: #1f8a5f;
+  --color-stock-low: #c9861b;
+  --color-stock-out: #c0392b;
 }
 
 body {
   font-family: var(--font-sans);
-  @apply bg-gray-50 text-gray-900;
+  @apply bg-paper text-ink;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Signature cut-corner shape for primary CTAs — dealership-signage feel */
+.cut-corner {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
 }

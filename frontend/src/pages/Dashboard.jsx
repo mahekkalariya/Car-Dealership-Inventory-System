@@ -80,13 +80,12 @@ export default function Dashboard() {
   }
 
   return (
+    
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-end justify-between mb-6 pb-4 border-b-2 border-ink">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900">Inventory</h1>
-          <p className="text-sm text-gray-500">
-            {vehicles.length} vehicle{vehicles.length !== 1 ? 's' : ''} available
-          </p>
+          <p className="font-mono text-[11px] tracking-widest text-gray-500 uppercase">Showroom floor</p>
+          <h1 className="font-display font-semibold text-3xl uppercase">Inventory</h1>
         </div>
         {isAdmin && (
           <button
@@ -94,12 +93,13 @@ export default function Dashboard() {
               setEditingVehicle(null);
               setShowForm((v) => !v);
             }}
-            className="bg-brand-600 text-white text-sm font-semibold rounded-lg px-4 py-2.5 hover:bg-brand-700 active:scale-[0.98] transition-all"
+            className="cut-corner bg-accent text-ink font-display font-semibold uppercase tracking-wide text-sm px-5 py-2.5 hover:bg-accent-deep hover:text-white transition-colors"
           >
             {showForm ? 'Close form' : '+ Add vehicle'}
           </button>
         )}
       </div>
+
 
       <SearchBar onFilterChange={fetchVehicles} />
 

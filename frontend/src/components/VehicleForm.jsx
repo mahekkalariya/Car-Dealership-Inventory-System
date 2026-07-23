@@ -28,12 +28,14 @@ export default function VehicleForm({ editingVehicle, onSubmit, onCancel }) {
     onSubmit({ ...form, price: Number(form.price), quantity: Number(form.quantity) });
   }
 
-  const inputClass =
-    'border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow';
+  const inputClass = 'border border-line font-mono text-sm px-3 py-2.5 focus:outline-none focus:border-accent transition-colors';
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded-xl p-4 mb-6 shadow-sm">
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <form onSubmit={handleSubmit} className="bg-panel border-2 border-ink p-4 mb-6">
+      <p className="font-mono text-[11px] tracking-widest text-gray-500 uppercase mb-3">
+        {editingVehicle ? 'Edit vehicle record' : 'New vehicle record'}
+      </p>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
         <input placeholder="Make" required value={form.make} onChange={(e) => update('make', e.target.value)} className={inputClass} />
         <input placeholder="Model" required value={form.model} onChange={(e) => update('model', e.target.value)} className={inputClass} />
         <input placeholder="Category" required value={form.category} onChange={(e) => update('category', e.target.value)} className={inputClass} />
@@ -41,15 +43,11 @@ export default function VehicleForm({ editingVehicle, onSubmit, onCancel }) {
         <input placeholder="Quantity" type="number" required min="0" value={form.quantity} onChange={(e) => update('quantity', e.target.value)} className={inputClass} />
       </div>
       <div className="flex gap-2 mt-3">
-        <button type="submit" className="bg-brand-600 text-white text-sm font-semibold rounded-lg px-4 py-2 hover:bg-brand-700 transition-colors">
+        <button type="submit" className="cut-corner bg-accent text-ink font-display font-semibold uppercase tracking-wide text-sm px-5 py-2 hover:bg-accent-deep hover:text-white transition-colors">
           {editingVehicle ? 'Save changes' : 'Add vehicle'}
         </button>
         {editingVehicle && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="border border-gray-300 text-sm font-medium rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors"
-          >
+          <button type="button" onClick={onCancel} className="border border-ink font-mono text-xs uppercase tracking-wide px-4 py-2 hover:bg-ink hover:text-white transition-colors">
             Cancel
           </button>
         )}

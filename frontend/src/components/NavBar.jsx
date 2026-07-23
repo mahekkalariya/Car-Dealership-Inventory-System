@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
@@ -11,36 +12,33 @@ export default function NavBar() {
   }
 
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-10">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-bold text-lg text-gray-900">
-          <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-600 text-white text-sm">
-            🚗
-          </span>
-          Dealership Inventory
+    <header className="bg-ink border-b-4 border-accent sticky top-0 z-10">
+      <div className="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+        <Link to="/" className="font-display font-semibold text-xl tracking-wide text-white uppercase">
+          Auto<span className="text-accent">Stock</span>
         </Link>
 
         {user ? (
           <div className="flex items-center gap-4 text-sm">
-            <span className="text-gray-600">
-              {user.name}{' '}
+            <span className="font-mono text-xs text-gray-300 uppercase tracking-wide">
+              {user.name}
               {user.role === 'admin' && (
-                <span className="ml-1 text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full">
-                  ADMIN
-                </span>
+                <span className="ml-2 text-ink bg-accent px-2 py-0.5 rounded-sm font-semibold">ADMIN</span>
               )}
             </span>
             <button
               onClick={handleLogout}
-              className="px-3 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors"
+              className="text-xs font-mono uppercase tracking-wide px-3 py-1.5 border border-gray-600 text-gray-200 hover:border-accent hover:text-accent transition-colors"
             >
               Log out
             </button>
           </div>
         ) : (
-          <div className="flex gap-3 text-sm font-medium">
-            <Link to="/login" className="px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">Log in</Link>
-            <Link to="/register" className="px-3 py-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700 transition-colors">
+          <div className="flex gap-2 text-sm font-mono uppercase tracking-wide">
+            <Link to="/login" className="px-3 py-1.5 text-gray-200 hover:text-accent transition-colors">
+              Log in
+            </Link>
+            <Link to="/register" className="px-3 py-1.5 bg-accent text-ink font-semibold hover:bg-accent-deep transition-colors">
               Register
             </Link>
           </div>

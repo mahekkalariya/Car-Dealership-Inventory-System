@@ -27,46 +27,34 @@ export default function Register() {
     }
   }
 
-  const inputClass =
-    'w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-shadow';
+  const inputClass = 'w-full border border-line font-mono text-sm px-3 py-2.5 focus:outline-none focus:border-accent transition-colors';
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
-      <div className="max-w-sm w-full bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
-        <div className="text-center mb-6">
-          <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-600 text-white text-xl mb-3">
-            🚗
-          </span>
-          <h1 className="text-xl font-bold text-gray-900">Create an account</h1>
-          <p className="text-sm text-gray-500 mt-1">Join the dealership inventory system</p>
+      <div className="max-w-sm w-full bg-panel border-2 border-ink">
+        <div className="bg-ink px-6 py-5 text-center">
+          <p className="font-display text-white uppercase tracking-wide text-lg">New Registration</p>
+          <p className="font-mono text-[11px] text-gray-400 tracking-widest uppercase mt-1">AutoStock Inventory</p>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <label className="block font-mono text-[11px] uppercase tracking-widest text-gray-500 mb-1">Name</label>
             <input required value={form.name} onChange={(e) => update('name', e.target.value)} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block font-mono text-[11px] uppercase tracking-widest text-gray-500 mb-1">Email</label>
             <input type="email" required value={form.email} onChange={(e) => update('email', e.target.value)} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              required
-              minLength={6}
-              value={form.password}
-              onChange={(e) => update('password', e.target.value)}
-              className={inputClass}
-            />
+            <label className="block font-mono text-[11px] uppercase tracking-widest text-gray-500 mb-1">Password</label>
+            <input type="password" required minLength={6} value={form.password} onChange={(e) => update('password', e.target.value)} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Account type</label>
-            <div className="flex gap-4 text-sm">
+            <label className="block font-mono text-[11px] uppercase tracking-widest text-gray-500 mb-2">Account type</label>
+            <div className="flex gap-4 text-sm font-mono">
               <label className="flex items-center gap-2">
                 <input type="radio" name="role" checked={form.role === 'user'} onChange={() => update('role', 'user')} />
-                Regular user
+                User
               </label>
               <label className="flex items-center gap-2">
                 <input type="radio" name="role" checked={form.role === 'admin'} onChange={() => update('role', 'admin')} />
@@ -74,21 +62,18 @@ export default function Register() {
               </label>
             </div>
           </div>
-          {error && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
+          {error && <p className="text-sm text-stock-out font-mono">{error}</p>}
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-brand-600 text-white font-semibold rounded-lg py-2.5 hover:bg-brand-700 active:scale-[0.98] transition-all disabled:opacity-50"
+            className="cut-corner w-full bg-accent text-ink font-display font-semibold uppercase tracking-wide py-2.5 hover:bg-accent-deep hover:text-white transition-colors disabled:opacity-50"
           >
             {submitting ? 'Creating account…' : 'Create account'}
           </button>
         </form>
-
-        <p className="text-sm text-gray-600 mt-5 text-center">
-          Already have an account?{' '}
-          <Link to="/login" className="text-brand-600 font-medium hover:underline">
-            Log in
-          </Link>
+        <p className="text-sm font-mono text-gray-500 pb-6 text-center">
+          Already registered?{' '}
+          <Link to="/login" className="text-accent hover:underline">Log in</Link>
         </p>
       </div>
     </div>
