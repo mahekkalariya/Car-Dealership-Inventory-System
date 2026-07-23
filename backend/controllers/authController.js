@@ -17,10 +17,10 @@ function buildAuthResponse(user) {
 
 async function register(req, res, next) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Name, email, and password are required' });
+      return res.status(400).json({ message: 'Name, email, and password are all required' });
     }
 
     const existing = await User.findOne({ email: email.toLowerCase() });
@@ -28,7 +28,13 @@ async function register(req, res, next) {
       return res.status(409).json({ message: 'An account with that email already exists' });
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: role === 'admin' ? 'admin' : 'user'
+    });
+
     return res.status(201).json(buildAuthResponse(user));
   } catch (err) {
     next(err);
