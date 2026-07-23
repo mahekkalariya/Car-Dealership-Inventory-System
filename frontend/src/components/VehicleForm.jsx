@@ -36,8 +36,8 @@ export default function VehicleForm({ editingVehicle, onSubmit, onCancel }) {
         className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
       <input placeholder="Category" required value={form.category} onChange={(e) => update('category', e.target.value)}
         className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
-      <input placeholder="Price" type="number" required min="0" value={form.price} onChange={(e) => update('price', e.target.value)}
-        className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
+      <input placeholder="Price (₹)" type="number" required min="0" value={form.price} onChange={(e) => update('price', e.target.value)}
+  className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
       <input placeholder="Quantity" type="number" required min="0" value={form.quantity} onChange={(e) => update('quantity', e.target.value)}
         className="border border-gray-300 rounded-md px-3 py-2 text-sm" />
       <div className="col-span-2 md:col-span-5 flex gap-2">

@@ -13,7 +13,9 @@ export default function VehicleCard({ vehicle, isAdmin, onPurchase, onEdit, onDe
         </span>
       </div>
 
-      <p className="text-lg font-semibold">${vehicle.price.toLocaleString()}</p>
+      <p className="text-lg font-semibold">
+  ₹{vehicle.price.toLocaleString('en-IN')}
+</p>
 
       <button
         onClick={() => onPurchase(vehicle._id)}
